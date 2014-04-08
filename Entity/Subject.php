@@ -81,6 +81,11 @@ class Subject
     protected $isSticked = false;
 
     /**
+     * @ORM\Column(name="hash_name", length=50, unique=true)
+     */
+    protected $hashName;
+    
+    /**
      * Constructor.
      */
     public function __construct()
@@ -152,5 +157,25 @@ class Subject
     public function isSticked()
     {
         return $this->isSticked;
+    }
+    
+        /**
+     * Returns the hashname of the subject.
+     *
+     * @return string
+     */
+    public function getHashName()
+    {
+        return $this->hashName;
+    }
+
+    /**
+     * Sets the hashname of the subject.
+     *
+     * @param string $hashName
+     */
+    public function setHashName($hashName)
+    {
+        $this->hashName = $hashName;
     }
 }

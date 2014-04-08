@@ -72,6 +72,12 @@ class Message
      *
      * @return integer
      */
+     
+     /**
+     * @ORM\Column(name="hash_name", length=50, unique=true)
+     */
+    protected $hashName;
+    
     public function getId()
     {
         return $this->id;
@@ -115,5 +121,25 @@ class Message
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+    
+    /**
+     * Returns the hashname of the message.
+     *
+     * @return string
+     */
+    public function getHashName()
+    {
+        return $this->hashName;
+    }
+
+    /**
+     * Sets the hashname of the message.
+     *
+     * @param string $hashName
+     */
+    public function setHashName($hashName)
+    {
+        $this->hashName = $hashName;
     }
 }
