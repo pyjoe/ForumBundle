@@ -115,7 +115,32 @@ class Category
         $this->name = $name;
     }
     
-        /**
+    /*
+    *   Need for the synchronisation
+    */
+    
+        
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+    
+    public function setCreationDate($date)
+    {
+        $this->creationDate = $date;
+    }
+    
+    public function setModificationDate($date)
+    {
+        $this->modificationDate = $date;
+    }
+ 
+    public function getModificationDate()
+    {
+        return $this->modificationDate;
+    }
+    
+    /**
      * Returns the hashname of the category.
      *
      * @return string

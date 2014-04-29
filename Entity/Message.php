@@ -66,18 +66,17 @@ class Message
      * @ORM\JoinColumn(name="user_id")
      */
     protected $creator;
-
-    /**
-     * Returns the resource id.
-     *
-     * @return integer
-     */
-     
+    
      /**
      * @ORM\Column(name="hash_name", length=50, unique=true)
      */
     protected $hashName;
     
+    /**
+     * Returns the resource id.
+     *
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
@@ -121,6 +120,25 @@ class Message
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+    
+    /*
+    *   Need for the synchronisation
+    */
+    
+    public function setCreationDate($date)
+    {
+        $this->creationDate = $date;
+    }
+    
+    public function setUpdate($date)
+    {
+        $this->updated = $date;
+    }
+    
+    public function getUpdate()
+    {
+        return $this->updated;
     }
     
     /**

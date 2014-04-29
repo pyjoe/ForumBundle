@@ -159,6 +159,25 @@ class Subject
         return $this->isSticked;
     }
     
+    /*
+    *   Need it for the synchronisation
+    */
+        
+    public function setCreationDate($date)
+    {
+        $this->creationDate = $date;
+    }
+    
+    public function setUpdate($date)
+    {
+        $this->updated = $date;
+    }
+   
+    public function getUpdate()
+    {
+        return $this->updated;
+    }
+    
         /**
      * Returns the hashname of the subject.
      *

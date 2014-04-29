@@ -31,11 +31,6 @@ class Forum extends AbstractResource
      */
     protected $categories;
     
-    /**
-     * @ORM\Column(name="hash_name", length=50, unique=true)
-     */
-    protected $hashName;
-    
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -54,25 +49,5 @@ class Forum extends AbstractResource
     public function removeCategory(Subject $category)
     {
         $this->categories->removeElement($category);
-    }
-    
-        /**
-     * Returns the hashname of the forulm.
-     *
-     * @return string
-     */
-    public function getHashName()
-    {
-        return $this->hashName;
-    }
-
-    /**
-     * Sets the hashname of the forum.
-     *
-     * @param string $hashName
-     */
-    public function setHashName($hashName)
-    {
-        $this->hashName = $hashName;
     }
 }
