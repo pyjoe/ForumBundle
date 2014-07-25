@@ -1,6 +1,6 @@
 <?php
 
-namespace Claroline\ForumBundle\Migrations\drizzle_pdo_mysql;
+namespace Claroline\ForumBundle\Migrations\pdo_mysql;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
@@ -8,9 +8,9 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated migration based on mapping information: modify it with caution
  *
- * Generation date: 2014/04/08 11:55:55
+ * Generation date: 2014/07/24 04:20:22
  */
-class Version20140408115553 extends AbstractMigration
+class Version20140724162012 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -23,10 +23,7 @@ class Version20140408115553 extends AbstractMigration
         ");
         $this->addSql("
             ALTER TABLE claro_forum 
-            ADD hash_name VARCHAR(50) NOT NULL
-        ");
-        $this->addSql("
-            CREATE UNIQUE INDEX UNIQ_F2869DFE1F029B6 ON claro_forum (hash_name)
+            DROP activate_notifications
         ");
         $this->addSql("
             ALTER TABLE claro_forum_message 
@@ -37,7 +34,8 @@ class Version20140408115553 extends AbstractMigration
         ");
         $this->addSql("
             ALTER TABLE claro_forum_subject 
-            ADD hash_name VARCHAR(50) NOT NULL
+            ADD hash_name VARCHAR(50) NOT NULL, 
+            DROP isClosed
         ");
         $this->addSql("
             CREATE UNIQUE INDEX UNIQ_273AA20BE1F029B6 ON claro_forum_subject (hash_name)
@@ -47,11 +45,8 @@ class Version20140408115553 extends AbstractMigration
     public function down(Schema $schema)
     {
         $this->addSql("
-            DROP INDEX UNIQ_F2869DFE1F029B6 ON claro_forum
-        ");
-        $this->addSql("
             ALTER TABLE claro_forum 
-            DROP hash_name
+            ADD activate_notifications TINYINT(1) NOT NULL
         ");
         $this->addSql("
             DROP INDEX UNIQ_2192ACF7E1F029B6 ON claro_forum_category
@@ -72,6 +67,7 @@ class Version20140408115553 extends AbstractMigration
         ");
         $this->addSql("
             ALTER TABLE claro_forum_subject 
+            ADD isClosed TINYINT(1) NOT NULL, 
             DROP hash_name
         ");
     }

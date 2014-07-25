@@ -1,6 +1,6 @@
 <?php
 
-namespace Claroline\ForumBundle\Migrations\ibm_db2;
+namespace Claroline\ForumBundle\Migrations\pdo_mysql;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
@@ -8,36 +8,30 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated migration based on mapping information: modify it with caution
  *
- * Generation date: 2014/04/08 11:55:55
+ * Generation date: 2014/07/24 04:27:09
  */
-class Version20140408115553 extends AbstractMigration
+class Version20140724162656 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         $this->addSql("
             ALTER TABLE claro_forum_category 
-            ADD COLUMN hash_name VARCHAR(50) NOT NULL
+            ADD hash_name VARCHAR(50) NOT NULL
         ");
         $this->addSql("
             CREATE UNIQUE INDEX UNIQ_2192ACF7E1F029B6 ON claro_forum_category (hash_name)
         ");
         $this->addSql("
-            ALTER TABLE claro_forum 
-            ADD COLUMN hash_name VARCHAR(50) NOT NULL
-        ");
-        $this->addSql("
-            CREATE UNIQUE INDEX UNIQ_F2869DFE1F029B6 ON claro_forum (hash_name)
-        ");
-        $this->addSql("
             ALTER TABLE claro_forum_message 
-            ADD COLUMN hash_name VARCHAR(50) NOT NULL
+            ADD hash_name VARCHAR(50) NOT NULL
         ");
         $this->addSql("
             CREATE UNIQUE INDEX UNIQ_6A49AC0EE1F029B6 ON claro_forum_message (hash_name)
         ");
         $this->addSql("
             ALTER TABLE claro_forum_subject 
-            ADD COLUMN hash_name VARCHAR(50) NOT NULL
+            ADD hash_name VARCHAR(50) NOT NULL, 
+            DROP isClosed
         ");
         $this->addSql("
             CREATE UNIQUE INDEX UNIQ_273AA20BE1F029B6 ON claro_forum_subject (hash_name)
@@ -47,32 +41,26 @@ class Version20140408115553 extends AbstractMigration
     public function down(Schema $schema)
     {
         $this->addSql("
-            ALTER TABLE claro_forum 
-            DROP COLUMN hash_name
-        ");
-        $this->addSql("
-            DROP INDEX UNIQ_F2869DFE1F029B6
+            DROP INDEX UNIQ_2192ACF7E1F029B6 ON claro_forum_category
         ");
         $this->addSql("
             ALTER TABLE claro_forum_category 
-            DROP COLUMN hash_name
+            DROP hash_name
         ");
         $this->addSql("
-            DROP INDEX UNIQ_2192ACF7E1F029B6
+            DROP INDEX UNIQ_6A49AC0EE1F029B6 ON claro_forum_message
         ");
         $this->addSql("
             ALTER TABLE claro_forum_message 
-            DROP COLUMN hash_name
+            DROP hash_name
         ");
         $this->addSql("
-            DROP INDEX UNIQ_6A49AC0EE1F029B6
+            DROP INDEX UNIQ_273AA20BE1F029B6 ON claro_forum_subject
         ");
         $this->addSql("
             ALTER TABLE claro_forum_subject 
-            DROP COLUMN hash_name
-        ");
-        $this->addSql("
-            DROP INDEX UNIQ_273AA20BE1F029B6
+            ADD isClosed TINYINT(1) NOT NULL, 
+            DROP hash_name
         ");
     }
 }

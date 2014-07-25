@@ -81,6 +81,11 @@ class Subject
     protected $isSticked = false;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isClosed = false;
+    
+    /**
      * @ORM\Column(name="hash_name", length=50, unique=true)
      */
     protected $hashName;
@@ -168,17 +173,27 @@ class Subject
         $this->creationDate = $date;
     }
     
-    public function setUpdate($date)
+    public function setModificationDate($date)
     {
         $this->updated = $date;
     }
-   
-    public function getUpdate()
+
+    public function getModificationDate()
     {
         return $this->updated;
     }
+      
+    public function setIsClosed($isClosed)
+    {
+        $this->isClosed = $isClosed;
+    }
+
+    public function isClosed()
+    {
+        return $this->isClosed;
+    }  
     
-        /**
+    /**
      * Returns the hashname of the subject.
      *
      * @return string
