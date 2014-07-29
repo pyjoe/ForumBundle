@@ -35,7 +35,12 @@ class Forum extends AbstractResource
      * @ORM\Column(name="hash_name", length=50, unique=true)
      */
     protected $hashName;
-    
+
+    /**
+     * @ORM\Column(name="activate_notifications", type="boolean")
+     */
+    protected $activateNotifications = false;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -56,7 +61,7 @@ class Forum extends AbstractResource
         $this->categories->removeElement($category);
     }
     
-        /**
+    /**
      * Returns the hashname of the forulm.
      *
      * @return string
@@ -74,5 +79,15 @@ class Forum extends AbstractResource
     public function setHashName($hashName)
     {
         $this->hashName = $hashName;
+    }
+
+    public function getActivateNotifications()
+    {
+        return $this->activateNotifications;
+    }
+
+    public function setActivateNotifications($boolean)
+    {
+        $this->activateNotifications = $boolean;
     }
 }

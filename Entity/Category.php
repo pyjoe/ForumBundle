@@ -115,7 +115,7 @@ class Category
         $this->name = $name;
     }
     
-        /**
+    /**
      * Returns the hashname of the category.
      *
      * @return string
@@ -133,5 +133,25 @@ class Category
     public function setHashName($hashName)
     {
         $this->hashName = $hashName;
+    }
+
+    public function setCreationDate($date)
+    {
+        $this->creationDate = $date;
+    }
+
+    public function setModificationDate($date)
+    {
+        $this->modificationDate = $date;
+    }
+
+    public function getCreationDate()
+    {
+        return $this->creationDate;
+    }
+
+    public function getModificationDate()
+    {
+        return $this->modificationDate;
     }
 }

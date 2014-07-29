@@ -13,6 +13,12 @@ plugin:
           #  The name will be passed to you by the Event manager.
         - name: post
         - name: moderate
+      default_rights:
+        - name: open
+        - name: post
+      activity_rules:
+        - action: resource-read
+        - action: resource-claroline_forum-create_message
 
   widgets:
      - name: claroline_forum_widget

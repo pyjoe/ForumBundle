@@ -88,30 +88,7 @@ class ForumListener extends ContainerAware
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
         $resource = $event->getResource();
-        $forum = new Forum();
-        $forum->setName($resource->getName());
-        $oldSubjects = $forum->getSubjects();
-
-        foreach ($oldSubjects as $oldSubject) {
-            $newSubject = new Subject;
-            $newSubject->setForum($forum);
-            $newSubject->setTitle($oldSubject->getTitle());
-            $newSubject->setCreator($oldSubject->getCreator());
-            $oldMessages = $oldSubjects->getMessages();
-
-            foreach ($oldMessages as $oldMessage) {
-                $newMessage = new Message();
-                $newMessage->setSubject($newSubject);
-                $newMessage->setCreator($oldMessage->getCreator());
-                $newMessage->setContent($oldMessage->getContent());
-
-                $em->persist($newMessage);
-            }
-
-            $em->persist($newSubject);
-        }
-
-        $event->setCopy($forum);
+        $event->setCopy($this->container->get('claroline.manager.forum_manager')->copy($resource));
         $event->stopPropagation();
     }
 
@@ -165,12 +142,14 @@ class ForumListener extends ContainerAware
         $em = $this->container->get('doctrine.orm.entity_manager');
         $notificationRepo = $em->getRepository('ClarolineForumBundle:Notification');
 
-        $notifications = $notificationRepo->findOneBy(array('user' => $user));
-
-        foreach ($notifications as $notification) {
+        $notifications = $notificationRepo->findOneBy(array('user' => $event->getUser()));
+        if (count($notifications) > 0) {
+            foreach ($notifications as $notification) {
             $em->remove($notification);
         }
-
-        $em->flush();
+            $em->flush();
+        }            
     }
+
+
 }
