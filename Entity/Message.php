@@ -131,12 +131,12 @@ class Message
         $this->creationDate = $date;
     }
     
-    public function setUpdate($date)
+    public function setModificationDate($date)
     {
         $this->updated = $date;
     }
     
-    public function getUpdate()
+    public function getModificationDate()
     {
         return $this->updated;
     }

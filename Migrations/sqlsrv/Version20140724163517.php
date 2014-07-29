@@ -1,6 +1,6 @@
 <?php
 
-namespace Claroline\ForumBundle\Migrations\pdo_sqlsrv;
+namespace Claroline\ForumBundle\Migrations\sqlsrv;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
@@ -8,9 +8,9 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated migration based on mapping information: modify it with caution
  *
- * Generation date: 2014/04/08 11:55:55
+ * Generation date: 2014/07/24 04:35:30
  */
-class Version20140408115553 extends AbstractMigration
+class Version20140724163517 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -20,14 +20,6 @@ class Version20140408115553 extends AbstractMigration
         ");
         $this->addSql("
             CREATE UNIQUE INDEX UNIQ_2192ACF7E1F029B6 ON claro_forum_category (hash_name) 
-            WHERE hash_name IS NOT NULL
-        ");
-        $this->addSql("
-            ALTER TABLE claro_forum 
-            ADD hash_name NVARCHAR(50) NOT NULL
-        ");
-        $this->addSql("
-            CREATE UNIQUE INDEX UNIQ_F2869DFE1F029B6 ON claro_forum (hash_name) 
             WHERE hash_name IS NOT NULL
         ");
         $this->addSql("
@@ -50,20 +42,6 @@ class Version20140408115553 extends AbstractMigration
 
     public function down(Schema $schema)
     {
-        $this->addSql("
-            ALTER TABLE claro_forum 
-            DROP COLUMN hash_name
-        ");
-        $this->addSql("
-            IF EXISTS (
-                SELECT * 
-                FROM sysobjects 
-                WHERE name = 'UNIQ_F2869DFE1F029B6'
-            ) 
-            ALTER TABLE claro_forum 
-            DROP CONSTRAINT UNIQ_F2869DFE1F029B6 ELSE 
-            DROP INDEX UNIQ_F2869DFE1F029B6 ON claro_forum
-        ");
         $this->addSql("
             ALTER TABLE claro_forum_category 
             DROP COLUMN hash_name
