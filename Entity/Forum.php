@@ -30,7 +30,12 @@ class Forum extends AbstractResource
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $categories;
-    
+
+    /**
+     * @ORM\Column(name="activate_notifications", type="boolean")
+     */
+    protected $activateNotifications = false;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -49,5 +54,15 @@ class Forum extends AbstractResource
     public function removeCategory(Subject $category)
     {
         $this->categories->removeElement($category);
+    }
+
+    public function getActivateNotifications()
+    {
+        return $this->activateNotifications;
+    }
+
+    public function setActivateNotifications($boolean)
+    {
+        $this->activateNotifications = $boolean;
     }
 }

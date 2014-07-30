@@ -86,6 +86,11 @@ class Subject
     protected $hashName;
     
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isClosed = false;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -167,18 +172,8 @@ class Subject
     {
         $this->creationDate = $date;
     }
-    
-    public function setUpdate($date)
-    {
-        $this->updated = $date;
-    }
-   
-    public function getUpdate()
-    {
-        return $this->updated;
-    }
-    
-        /**
+ 
+    /**
      * Returns the hashname of the subject.
      *
      * @return string
@@ -196,5 +191,25 @@ class Subject
     public function setHashName($hashName)
     {
         $this->hashName = $hashName;
+    }
+    
+    public function setModificationDate($date)
+    {
+        $this->updated = $date;
+    }
+
+    public function getModificationDate()
+    {
+        return $this->updated;
+    }
+
+    public function setIsClosed($isClosed)
+    {
+        $this->isClosed = $isClosed;
+    }
+
+    public function isClosed()
+    {
+        return $this->isClosed;
     }
 }

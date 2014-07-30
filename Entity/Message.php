@@ -125,20 +125,10 @@ class Message
     /*
     *   Need for the synchronisation
     */
-    
+
     public function setCreationDate($date)
     {
         $this->creationDate = $date;
-    }
-    
-    public function setUpdate($date)
-    {
-        $this->updated = $date;
-    }
-    
-    public function getUpdate()
-    {
-        return $this->updated;
     }
     
     /**
@@ -159,5 +149,15 @@ class Message
     public function setHashName($hashName)
     {
         $this->hashName = $hashName;
+    }
+    
+    public function setModificationDate($date)
+    {
+        $this->updated = $date;
+    }
+
+    public function getModificationDate()
+    {
+        return $this->updated;
     }
 }
