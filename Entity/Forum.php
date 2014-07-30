@@ -31,6 +31,11 @@ class Forum extends AbstractResource
     protected $categories;
 
     /**
+     *(name="activate_notifications", type="boolean")
+     */
+    //protected $hashName;
+
+    /**
      * @ORM\Column(name="activate_notifications", type="boolean")
      */
     protected $activateNotifications = false;
@@ -53,6 +58,21 @@ class Forum extends AbstractResource
     public function removeCategory(Subject $category)
     {
         $this->categories->removeElement($category);
+    }
+    
+    /**
+     * Returns the hashname of the forulm.
+     *
+     * @return string
+     */
+    // public function getHashName()
+    // {
+        // return $this->activateNotifications;
+    // }
+
+    public function setActivateNotifications($boolean)
+    {
+        $this->activateNotifications = $boolean;
     }
 
     public function getActivateNotifications()
