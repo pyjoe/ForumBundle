@@ -29,52 +29,60 @@ class Updater030100
 
     public function postUpdate()
     {        
-        $this->log('Updating forum table...');
+        $this->log('Adding hashname...');
         $forums = $this->em->getRepository('ClarolineForumBundle:Forum')->findAll();
-
-        $counter = 0;
+        $categories = $this->em->getRepository('ClarolineForumBundle:Category')->findAll();
+        $subjects = $this->em->getRepository('ClarolineForumBundle:Subject')->findAll();
+        $messages = $this->em->getRepository('ClarolineForumBundle:Message')->findAll();
         
-        foreach ($forums as $forum) {
-            $categories = $forum->getCategories();
-            $this->log('Adding category hashname...');
-            $counter ++;
-            $this->testFlush($counter);
-            $this->postUpdateCategory($categories, $counter);
-        }
+        $counter = 0;
+        $this->postUpdateCategory($categories, $counter);
+        $this->postUpdateSubjects($subjects, $counter);
+        $this->postUpdateMessage($messages, $counter);
+        
+        // foreach ($forums as $forum) {
+            // $categories = $forum->getCategories();
+            // $this->log('Adding category hashname...');
+            // $counter ++;
+            // $this->testFlush($counter);
+            // $this->postUpdateCategory($categories, $counter);
+        // }
 
         $this->em->flush();
     }
     
-    private postUpdateCategory($categories, $counter)
+    private function postUpdateCategory($categories, $counter)
     {
+            $this->log('Adding category hashname...');
         foreach ($categories as $cat) {
             $subjects = $cat->getSubjects();
             $cat->setHashname($this->ut->generateGuid());
-            $this->log('Adding subjects hashname...');
+            // $this->log('Adding subjects hashname...');
             $counter ++;
             $this->testFlush($counter);
-            $this->postUpdateSubjects($subjects, $counter);
+            // $this->postUpdateSubjects($subjects, $counter);
         }
     }
     
-    private postUpdateSubjects($subjects, $counter) 
-    {
+    private function postUpdateSubjects($subjects, $counter) 
+    {        $this->log('Adding subjects hashname...');
         foreach ($subjects as $subject) {
             $subject->setHashname($this->ut->generateGuid());
             $messages = $subject->getMessages();
-            $this->log('Adding message hashname...');
+            // $this->log('Adding message hashname...');
             $counter ++;
             $this->testFlush($counter);
-            $this->postUpdateMessage($messages, $counter);
+            // $this->postUpdateMessage($messages, $counter);
         }
     }
     
-    private postUpdateMessage($messages, $counter)
+    private function postUpdateMessage($messages, $counter)
     {
+            $this->log('Adding message hashname...');
         foreach ($messages as $msg) {
             $msg->setHashname($this->ut->generateGuid());
             $counter ++;
-            $this->testFlush($counter);
+            // $this->testFlush($counter);
         }
     }
 

@@ -30,11 +30,6 @@ class Forum extends AbstractResource
      * @ORM\OrderBy({"id" = "ASC"})
      */
     protected $categories;
-    
-    /**
-     * @ORM\Column(name="hash_name", length=50, unique=true)
-     */
-    protected $hashName;
 
     /**
      * @ORM\Column(name="activate_notifications", type="boolean")
