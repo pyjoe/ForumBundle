@@ -60,26 +60,6 @@ class Forum extends AbstractResource
     {
         $this->categories->removeElement($category);
     }
-    
-    /**
-     * Returns the hashname of the forulm.
-     *
-     * @return string
-     */
-    public function getHashName()
-    {
-        return $this->hashName;
-    }
-
-    /**
-     * Sets the hashname of the forum.
-     *
-     * @param string $hashName
-     */
-    public function setHashName($hashName)
-    {
-        $this->hashName = $hashName;
-    }
 
     public function getActivateNotifications()
     {

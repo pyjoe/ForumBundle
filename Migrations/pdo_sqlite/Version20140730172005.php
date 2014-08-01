@@ -8,9 +8,9 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated migration based on mapping information: modify it with caution
  *
- * Generation date: 2014/04/08 11:55:55
+ * Generation date: 2014/07/30 05:20:17
  */
-class Version20140408115553 extends AbstractMigration
+class Version20140730172005 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -65,44 +65,6 @@ class Version20140408115553 extends AbstractMigration
             CREATE UNIQUE INDEX UNIQ_2192ACF7E1F029B6 ON claro_forum_category (hash_name)
         ");
         $this->addSql("
-            DROP INDEX UNIQ_F2869DFB87FAB32
-        ");
-        $this->addSql("
-            CREATE TEMPORARY TABLE __temp__claro_forum AS 
-            SELECT id, 
-            resourceNode_id 
-            FROM claro_forum
-        ");
-        $this->addSql("
-            DROP TABLE claro_forum
-        ");
-        $this->addSql("
-            CREATE TABLE claro_forum (
-                id INTEGER NOT NULL, 
-                resourceNode_id INTEGER DEFAULT NULL, 
-                hash_name VARCHAR(50) NOT NULL, 
-                PRIMARY KEY(id), 
-                CONSTRAINT FK_F2869DFB87FAB32 FOREIGN KEY (resourceNode_id) 
-                REFERENCES claro_resource_node (id) 
-                ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE
-            )
-        ");
-        $this->addSql("
-            INSERT INTO claro_forum (id, resourceNode_id) 
-            SELECT id, 
-            resourceNode_id 
-            FROM __temp__claro_forum
-        ");
-        $this->addSql("
-            DROP TABLE __temp__claro_forum
-        ");
-        $this->addSql("
-            CREATE UNIQUE INDEX UNIQ_F2869DFB87FAB32 ON claro_forum (resourceNode_id)
-        ");
-        $this->addSql("
-            CREATE UNIQUE INDEX UNIQ_F2869DFE1F029B6 ON claro_forum (hash_name)
-        ");
-        $this->addSql("
             DROP INDEX IDX_6A49AC0E23EDC87
         ");
         $this->addSql("
@@ -111,8 +73,8 @@ class Version20140408115553 extends AbstractMigration
         $this->addSql("
             CREATE TEMPORARY TABLE __temp__claro_forum_message AS 
             SELECT id, 
-            subject_id, 
             user_id, 
+            subject_id, 
             content, 
             created, 
             updated 
@@ -124,28 +86,28 @@ class Version20140408115553 extends AbstractMigration
         $this->addSql("
             CREATE TABLE claro_forum_message (
                 id INTEGER NOT NULL, 
-                subject_id INTEGER DEFAULT NULL, 
                 user_id INTEGER DEFAULT NULL, 
+                subject_id INTEGER DEFAULT NULL, 
                 content CLOB NOT NULL, 
                 created DATETIME NOT NULL, 
                 updated DATETIME NOT NULL, 
                 hash_name VARCHAR(50) NOT NULL, 
                 PRIMARY KEY(id), 
+                CONSTRAINT FK_6A49AC0EA76ED395 FOREIGN KEY (user_id) 
+                REFERENCES claro_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE, 
                 CONSTRAINT FK_6A49AC0E23EDC87 FOREIGN KEY (subject_id) 
                 REFERENCES claro_forum_subject (id) 
-                ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE, 
-                CONSTRAINT FK_6A49AC0EA76ED395 FOREIGN KEY (user_id) 
-                REFERENCES claro_user (id) NOT DEFERRABLE INITIALLY IMMEDIATE
+                ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE
             )
         ");
         $this->addSql("
             INSERT INTO claro_forum_message (
-                id, subject_id, user_id, content, created, 
+                id, user_id, subject_id, content, created, 
                 updated
             ) 
             SELECT id, 
-            subject_id, 
             user_id, 
+            subject_id, 
             content, 
             created, 
             updated 
@@ -177,7 +139,8 @@ class Version20140408115553 extends AbstractMigration
             title, 
             created, 
             updated, 
-            isSticked 
+            isSticked, 
+            isClosed 
             FROM claro_forum_subject
         ");
         $this->addSql("
@@ -192,6 +155,7 @@ class Version20140408115553 extends AbstractMigration
                 created DATETIME NOT NULL, 
                 updated DATETIME NOT NULL, 
                 isSticked BOOLEAN NOT NULL, 
+                isClosed BOOLEAN NOT NULL, 
                 hash_name VARCHAR(50) NOT NULL, 
                 PRIMARY KEY(id), 
                 CONSTRAINT FK_273AA20B12469DE2 FOREIGN KEY (category_id) 
@@ -204,7 +168,7 @@ class Version20140408115553 extends AbstractMigration
         $this->addSql("
             INSERT INTO claro_forum_subject (
                 id, category_id, user_id, title, created, 
-                updated, isSticked
+                updated, isSticked, isClosed
             ) 
             SELECT id, 
             category_id, 
@@ -212,7 +176,8 @@ class Version20140408115553 extends AbstractMigration
             title, 
             created, 
             updated, 
-            isSticked 
+            isSticked, 
+            isClosed 
             FROM __temp__claro_forum_subject
         ");
         $this->addSql("
@@ -231,43 +196,6 @@ class Version20140408115553 extends AbstractMigration
 
     public function down(Schema $schema)
     {
-        $this->addSql("
-            DROP INDEX UNIQ_F2869DFE1F029B6
-        ");
-        $this->addSql("
-            DROP INDEX UNIQ_F2869DFB87FAB32
-        ");
-        $this->addSql("
-            CREATE TEMPORARY TABLE __temp__claro_forum AS 
-            SELECT id, 
-            resourceNode_id 
-            FROM claro_forum
-        ");
-        $this->addSql("
-            DROP TABLE claro_forum
-        ");
-        $this->addSql("
-            CREATE TABLE claro_forum (
-                id INTEGER NOT NULL, 
-                resourceNode_id INTEGER DEFAULT NULL, 
-                PRIMARY KEY(id), 
-                CONSTRAINT FK_F2869DFB87FAB32 FOREIGN KEY (resourceNode_id) 
-                REFERENCES claro_resource_node (id) 
-                ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE
-            )
-        ");
-        $this->addSql("
-            INSERT INTO claro_forum (id, resourceNode_id) 
-            SELECT id, 
-            resourceNode_id 
-            FROM __temp__claro_forum
-        ");
-        $this->addSql("
-            DROP TABLE __temp__claro_forum
-        ");
-        $this->addSql("
-            CREATE UNIQUE INDEX UNIQ_F2869DFB87FAB32 ON claro_forum (resourceNode_id)
-        ");
         $this->addSql("
             DROP INDEX UNIQ_2192ACF7E1F029B6
         ");
@@ -394,7 +322,8 @@ class Version20140408115553 extends AbstractMigration
             title, 
             created, 
             updated, 
-            isSticked 
+            isSticked, 
+            isClosed 
             FROM claro_forum_subject
         ");
         $this->addSql("
@@ -409,6 +338,7 @@ class Version20140408115553 extends AbstractMigration
                 created DATETIME NOT NULL, 
                 updated DATETIME NOT NULL, 
                 isSticked BOOLEAN NOT NULL, 
+                isClosed BOOLEAN NOT NULL, 
                 PRIMARY KEY(id), 
                 CONSTRAINT FK_273AA20B12469DE2 FOREIGN KEY (category_id) 
                 REFERENCES claro_forum_category (id) 
@@ -420,7 +350,7 @@ class Version20140408115553 extends AbstractMigration
         $this->addSql("
             INSERT INTO claro_forum_subject (
                 id, category_id, user_id, title, created, 
-                updated, isSticked
+                updated, isSticked, isClosed
             ) 
             SELECT id, 
             category_id, 
@@ -428,7 +358,8 @@ class Version20140408115553 extends AbstractMigration
             title, 
             created, 
             updated, 
-            isSticked 
+            isSticked, 
+            isClosed 
             FROM __temp__claro_forum_subject
         ");
         $this->addSql("
